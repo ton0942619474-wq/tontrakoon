@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Study Planner</title>
+</head>
+<body>
+
+<h2>วางแผนอ่านหนังสือ (หลายวิชา)</h2>
+
+<h3>เพิ่มวิชา</h3>
+<form method="POST">
+    ชื่อวิชา: <input type="text" name="name" required>
+    ความยาก:
+    <select name="difficulty">
+        <option value="1">ง่าย</option>
+        <option value="2">กลาง</option>
+        <option value="3">ยาก</option>
+    </select>
+    <button type="submit" name="add">เพิ่มวิชา</button>
+</form>
+
+<h4>วิชาที่เพิ่มแล้ว:</h4>
+<ul>
+    {% for sub in subjects %}
+        <li>{{ sub.name }} (ระดับ {{ sub.difficulty }})</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h3>คำนวณตารางอ่าน</h3>
+<form method="POST">
+    จำนวนวัน: <input type="number" name="days" required>
+    ชั่วโมงต่อวัน: <input type="number" step="0.5" name="hours" required>
+    <button type="submit" name="calculate">คำนวณ</button>
+</form>
+
+{% if result %}
+    <h3>ตารางอ่านหนังสือ</h3>
+    {% for day, plans in result %}
+        <p><b>วันที่ {{ day }}</b></p>
+        <ul>
+            {% for plan in plans %}
+                <li>{{ plan }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
